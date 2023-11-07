@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% if (locals.title) { %>
+        <title><%= locals.title %></title>
+    <% } else { %>
+        <title>My Website</title>
+    <% } %>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .signup-box {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            margin: auto;
+            margin-top: 100px;
+            padding: 20px;
+            max-width: 400px;
+        }
+
+        .signup-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .signup-box label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .signup-box input[type="text"],
+        .signup-box input[type="email"],
+        .signup-box input[type="password"],
+        .signup-box input[type="submit"] {
+            width: 93%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .signup-box input[type="submit"] {
+            width: 99%;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-box">
+        <h2>Signup</h2>
+        <form>
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="name" placeholder="Enter your full name" required>
+            <span id="na" style="color: red;"></span>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Enter your email address" required>
+            <span id="text" style="color: red;"></span>
+            <label for="gender">Gender</label>
+            <input type="text" id="gender" name="gender" placeholder="Enter your gender" required>
+            <span id="ge" style="color: red;"></span>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <span id="pass" style="color: red;"></span>
+            <input type="submit" value="Signup" id="submit">
+        </form>
+    </div>
+
+    <!-- jQuery 3.6.0 CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+    <script>
+        $(document).ready(function(){
+            $('#submit').on('click', function(event){
+				event.preventDefault();
+
+                console.log('button clicked');
+                let name = $('#fullname').val().trim();
+                let email = $('#email').val();
+                let gender = $('#gender').val();
+                let password = $('#password').val();
+
+                let mailformat = /^([A-Za-z0-9_\-\.])+\@gmail\.com$/;
+                let nameformat = /^[a-zA-Z ]+$/;
+                let genderformat = /^(male|female)$/i;
+
+                let validate = true;
+
+                if (!name.match(nameformat) || name.length === 0) {
+                    console.log("enter a valid name");
+                    let text = "Enter a valid name";
+                    document.getElementById('na').innerHTML = text;
+                    $('#fullname').focus();
+                    validate = false;
+                } else if (!email.match(mailformat)) {
+                    console.log("Check the email");
+                    let text = "Incorrect Email";
+                    document.getElementById('text').innerHTML = text;
+                    $('#email').focus();
+                    validate = false;
+                } else if (!gender.match(genderformat)) {
+                    console.log("Please check the gender");
+                    let text = "Incorrect Gender";
+                    document.getElementById('ge').innerHTML = text;
+                    $('#gender').focus();
+                    validate = false;
+                } else {
+                    console.log("recheck everything");
+                }
+
+                console.log(validate);
+
+                if (validate) {
+                    console.log("everything is okay");
+                    const data = {
+                        "name": name,
+                        "email": email,
+                        "gender": gender,
+                        "password": password
+                    };
+
+                    console.log(data);
+					debugger
+                    $.ajax({
+                        url: "/signup",
+                        method: "post",
+                        data: data,
+                        success: function(response) {
+                            console.log(response);
+
+                            if (response.message == "successful") {
+                                Swal.fire({
+                                    title: "Info",
+                                    text: response.message,
+                                    icon: "info",
+                                    confirmButtonText: "OK"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.href="/login";
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Info",
+                                    text: response.message,
+                                    icon: "success",
+                                    confirmButtonText: "OK"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    console.log("Error in validation");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Validation failed',
+                        showConfirmButton: true,
+                        timer: 5000
+                    });
+                }
+
+            });
+        });
+    </script>
+</body>
+</html>

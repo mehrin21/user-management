@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% if (locals.title) { %>
+        <title>
+            <%= locals.title %>
+        </title>
+        <% } else { %>
+            <title>My Website</title>
+            <% } %>
+                <link rel="stylesheet" type="text/css" href="style.css">
+
+
+                <style>
+                    body {
+                        background-color: #f2f2f2;
+                        font-family: Arial, sans-serif;
+                    }
+
+                    .login-box {
+                        background-color: #fff;
+                        border-radius: 5px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                        margin: auto;
+                        margin-top: 100px;
+                        padding: 20px;
+
+                        max-width: 400px;
+                    }
+
+                    .login-box h2 {
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+
+                    .login-box label {
+                        display: block;
+                        margin-bottom: 5px;
+                    }
+
+                    .login-box input[type="text"],
+                    .login-box input[type="password"],
+                    .login-box input[type="submit"] {
+                        width: 92%;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        margin-bottom: 20px;
+                    }
+
+                    .login-box input[type="submit"] {
+                        background-color: #4CAF50;
+                        color: #fff;
+                        font-size: 16px;
+                        cursor: pointer;
+                    }
+
+                    #msg {
+                        color: red;
+                    }
+                </style>
+</head>
+
+<body>
+    <div class="login-box">
+        <h2>Admin Login</h2>
+        <form action="/admin/adminlogin" method="POST">
+            <% if (locals.message) { %>
+                <div id="msg" class="alert alert-success">
+                    <strong>
+                        <%= locals.message %>
+                    </strong>
+                </div>
+                <%}%>
+
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="name" placeholder="Enter your username">
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
+
+                    <input type="submit" value="Login">
+        </form>
+    </div>
+</body>
+
+</html>

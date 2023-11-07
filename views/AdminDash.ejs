@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+       
+       <style>
+            @import url('https://fonts.googleapis.com/css2?family=Barlow&family=Open+Sans&family=PT+Sans&family=Poppins:wght@100;300;400&display=swap');
+         :root{
+            --dark:#2b2d42;
+            --light:#adb5bd;
+            --border:#dee2e6;
+            --border-btn:#edf2f4;
+
+         }
+         *{
+            padding:0;
+            margin:0;
+            box-sizing: border-box;
+         }
+         a{
+            text-decoration: none;
+            font-family: 'PT Sans',sans serif;
+         }
+         .container{
+            max-width:1024px;
+            margin:auto;
+                    }
+
+        .nav-brand{
+            font-size:1.5em;
+            font-weight:bold;
+        }
+        .d-flex{
+            display:flex;
+            flex-wrap: wrap;
+        }
+
+        .justify-between{
+            justify-content: space-between;
+        }
+        .text-center{
+            text-align:center;
+
+        }
+        .border-shadow{
+            border:1px solid var(--border-btn);
+            box-shadow:1px 3px 10px #e9ecef;
+        }
+        .text-dark{
+            color:var(--dark);
+        }
+        .inline{
+            display: inline-block;
+        }
+        .text-light{
+            color:var(--light);
+             
+        }
+        /* .text-gradient{
+            background:linear-gradient(to right,#8e2de2)
+        } */
+#header nav{
+    background-color: #06d6a0;
+    padding:1em 0;
+    width:100%;
+     
+}
+#site-main{
+    margin-top: 6em;
+    font-family: 'Barlow',sans-serif;
+}
+#site-main .container .box-nav>a{
+    font-size: 1em;
+    padding:.5em 1em;
+}
+#site-main .container form{
+     margin:2em 0;
+
+}
+table{
+    border-spacing: 0px;
+    width:100%;
+
+}
+
+.table td, .table th{
+    padding:.75em;
+    vertical-align: top;
+    text-align: center;
+    border-top:1px solid var(--dark);
+    }
+ .table td>a.btn{
+    padding:.3em 1em;
+    font-size: 1.1em;
+    margin:0 .2em;
+ }   
+
+
+ .table tbody tr:hover{
+    background-color: #06d6a0;
+    padding:1em 0; ;
+    color: white;
+ }
+ 
+ thead tr{
+    background-color: #010005;
+    padding:1em 0; ;
+    color: white;
+ }
+ .logout-btn {
+        background-color: #fff;
+        color: #333;
+        border: 2px solid #fff;
+        border-radius: 4px;
+        padding: 10px 20px;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      .logout-btn:hover {
+        background-color: #fff;
+        color: #555;
+      }
+ .submit-btn {
+        background-color:#03b384;
+        color: white;
+        border: 2px solid #fff;
+        border-radius: 4px;
+        padding: 10px 20px;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      .submit-btn:hover {
+        background-color:#06d6a0;
+        color: #555;
+      }
+ .copt1{
+    display: flex;
+    flex-direction: row;
+ }
+
+
+
+         </style>
+    </head>
+
+<body>
+	<header id="header">
+		<nav>
+			<div class="container copt1">
+				<div class="text-center">
+					<a href="" class="nav-brand text-dark">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;User Management System &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</a>
+				</div>
+                <div class="header">
+                    <a href="/admin/logout" class="logout-btn">Logout</a>
+                </div>
+			</div>
+		</nav>
+
+        <div class=" box-nav d-flex" style="margin-left: 170px; margin-top: 100px;">
+
+
+        <form action="/admin/search" method="POST" >
+			<input type="text" required style="height: 36px;" placeholder="search" name="search" > <button  class="submit-btn"type="submit">Search</button>
+             </form>
+
+        <form action="/admin/reset" method="get" >
+			<button  class="submit-btn">Reset</button></a>
+             </form>
+
+             <!-- <form action="/admin/adduser" method="get" >
+                <button  class="submit-btn">Add User</button></a>
+                 </form> -->
+                 
+            </div>  
+
+	</header>
+	<!-- main section -->
+	<main id="site-main">
+		<div class="container">
+         
+            <!-- form handling -->
+			
+			
+            <form action="/">
+
+                <table class="table">
+                    <thead class="thead-dark">
+						
+						<tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Delete</th>
+                            <th>Update</th>
+                           
+                             
+                        </tr>
+                    </thead>
+                    <tbody>
+						<% for(var i=0;i < find.length;i++ ){%>
+                       
+                          
+                            <tr> 
+                                <td><%=i+1 %></td>
+                                <td><%=find[i].name%></td>
+                                <td><%=find[i].email%></td>
+                                <td><%=find[i].gender%></td>
+                                 <td><a href="/admin/delete?userid=<%=find[i]._id %>"><i class="fa-solid fa-trash"></i></a></td>
+                                 <td><a href="/admin/update?id=<%=find[i]._id %>"><i class="fa-solid fa-pen"></i></a></td>
+								
+                            </tr>
+                           
+<%} %>
+                    </tbody>
+                </table>
+            </form>
+
+
+		</div>
+
+
+
+	</main>
+</body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+    <% if (locals.title) { %>
+        <script>
+          Swal.fire({
+            icon: 'error',
+            title: '<%=title%>',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        </script>
+      <% } %>
+
+
+</html>

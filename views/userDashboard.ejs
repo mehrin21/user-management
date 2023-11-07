@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <style>
+      /* Reset styles */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Main styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      .dashboard {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 50px;
+      }
+
+      .card {
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        width: 300px;
+        margin: 10px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .card h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .card p {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .card a {
+        display: inline-block;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      .card a:hover {
+        background-color: #555;
+      }
+
+      /* Header styles */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        padding: 20px;
+        color: #fff;
+      }
+
+      .logout-btn {
+        background-color: #fff;
+        color: #333;
+        border: 2px solid #fff;
+        border-radius: 4px;
+        padding: 10px 20px;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      .logout-btn:hover {
+        background-color: #fff;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <h1>Welcome, <%= locals.title %></h1>
+      <a href="/logout" class="logout-btn">Logout</a>
+    </header>
+
+    <div class="dashboard">
+      <div class="card">
+        <h2>This Is your Dashboard</h2>
+        <p></p>
+        <a href="#">Learn More</a>
+      </div>
+    
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style>
+		body {
+			background-color: #f2f2f2;
+			font-family: Arial, sans-serif;
+		}
+
+		.signup-box {
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			margin: auto;
+			margin-top: 100px;
+			padding: 20px;
+			max-width: 400px;
+		}
+
+		.signup-box h2 {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		.signup-box label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		.signup-box input[type="text"],
+		.signup-box input[type="email"],
+		.signup-box input[type="password"],
+		.signup-box input[type="submit"],
+		.signup-box input[type="gender"] {
+			width: 93%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin-bottom: 20px;
+		}
+
+		.signup-box input[type="submit"] {
+			width: 99%;
+			background-color: #4CAF50;
+			color: #fff;
+			font-size: 16px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="signup-box">
+		<h2>Update</h2>
+		<form>
+			<input type="hidden" name="id" value="<%=userdata._id%>">
+			<label for="fullname">Full Name</label>
+			<input type="text" id="name" name="name" value="<%=userdata.name%>">
+			<span id="na" style="color: red;""></span>
+            <label for=" email">Email</label>
+				<input type="text" id="email" name="email" value="<%=userdata.email%>">
+				<span id="text" style="color: red;""></span>
+		           <label for="gender">gender</label>
+					<select id="gender" name="gender" value="<%=userdata.gender%>">
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+					</select>
+					<span id="ge" style="color: red;""></span>
+                     <input type="submit" value="update" id="user">
+		</form>
+	</div>
+	<!-- jQuery 3.6.0 CDN -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	<script>
+		$(document).ready(function () {
+			$('#user').on('click', function (event) {
+				event.preventDefault();
+				console.log("btn clicked");
+				let name1 = $('#name').val()
+				// console.log(name1)
+				let email = $('#email').val()
+				let gender = $('#gender').val()
+
+				let Nformat = /^[a-zA-Z ]+$/;
+				let EFormat = /^([A-Za-z0-9_\-\.])+\@gmail\.com$/;
+				let Gformat = /^(male|female)$/i;
+
+				let validate = true;
+
+				if (!name1.match(Nformat)) {
+					console.log("enter valid name")
+					let text = "Enter valid name";
+					document.getElementById('na').innerHTML = text;
+					$('#name').focus();
+					validate = false;
+				} else if (!email.match(EFormat)) {
+					console.log("chect the email")
+					let text = "Incorrect Email";
+					document.getElementById('text').innerHTML = text;
+					$('#email').focus();
+					validate = false;
+				} else if (!gender.match(Gformat)) {
+					console.log("plz check the gender")
+					let text = "Incorrect Gender";
+					document.getElementById('ge').innerHTML = text;
+					$('#gender').focus();
+					validate = false;
+				} else {
+					console.log("recheck everything")
+
+				}
+				console.log(validate)
+				if (validate) {
+					console.log("everything is ok");
+					const data = {
+						id: $('input[name="id"]').val(),
+						"name": name,
+						"email": email,
+						"gender": gender
+					};
+					console.log(data);
+					debugger
+					$.ajax({
+						url: "/admin/update",
+						method: "post",
+						data: data,
+						success: function (response) {
+							console.log(response);
+							if (response.message == "successful") {
+								Swal.fire({
+									title: "Info",
+									text: response.message,
+									icon: "info",
+									confirmButtonText: "OK"
+								}).then((result) => {
+									if (result.isConfirmed) {
+										location.href = "/AdminDash";
+									}
+								});
+							} else {
+								Swal.fire({
+									title: "Info",
+									text: response.message,
+									icon: "success",
+									confirmButtonText: "OK"
+								}).then((result) => {
+									if (result.isConfirmed) {
+										location.reload();
+									}
+								})
+							}
+						}
+					});
+				} else {
+					console.log("Error in validation");
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: 'Validation failed',
+						showConfirmButton: true,
+						timer: 5000
+					});
+				}
+			});
+		})
+	</script>
+</body>
+
+</html>
